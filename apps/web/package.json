@@ -1,0 +1,30 @@
+{
+  "name": "@interwar/web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src e2e *.ts",
+    "test": "vitest run src",
+    "smoke": "playwright test"
+  },
+  "dependencies": {
+    "pixi.js": "8.9.2",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.28.0",
+    "@playwright/test": "1.55.1",
+    "@types/node": "22.15.30",
+    "@types/react": "19.1.6",
+    "@types/react-dom": "19.1.5",
+    "eslint": "9.28.0",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.33.1",
+    "vite": "6.4.1",
+    "vitest": "3.2.4"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "interwar-command",
+  "private": true,
+  "packageManager": "pnpm@10.11.1",
+  "engines": {
+    "node": "22.16.0",
+    "pnpm": "10.11.1"
+  },
+  "scripts": {
+    "wasm:build": "wasm-pack build crates/game-wasm --target web --out-dir pkg",
+    "dev": "pnpm wasm:build && pnpm --filter @interwar/web --fail-if-no-match dev",
+    "build": "pnpm typecheck && pnpm --filter @interwar/web --fail-if-no-match build",
+    "typecheck": "pnpm wasm:build && pnpm --filter @interwar/web --fail-if-no-match typecheck",
+    "lint": "pnpm --filter @interwar/web --fail-if-no-match lint",
+    "test": "cargo test --workspace && pnpm --filter @interwar/web --fail-if-no-match test",
+    "test:e2e": "pnpm build && pnpm --filter @interwar/web --fail-if-no-match smoke",
+    "check": "cargo fmt --all --check && cargo clippy --workspace --all-targets -- -D warnings && pnpm test && pnpm lint && pnpm test:e2e"
+  }
+}
