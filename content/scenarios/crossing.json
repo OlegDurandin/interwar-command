@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "rules_version": "0.1",
+  "id": "training_crossing",
+  "title": "Переправа",
+  "description": "Учебная карта. Дорога связывает два склада через мост. Очки приносит контроль посёлка у восточного конца моста.",
+  "historicity": "fictional",
+  "turn_days": 1,
+  "map": {
+    "width": 8,
+    "height": 5,
+    "default_terrain": "plain",
+    "default_controller": "blue",
+    "tiles": [
+      {"q":2,"r":0,"terrain":"forest"},
+      {"q":4,"r":0,"controller":"red"},
+      {"q":5,"r":0,"controller":"red"},
+      {"q":6,"r":0,"controller":"red"},
+      {"q":7,"r":0,"controller":"red"},
+      {"q":4,"r":1,"controller":"red"},
+      {"q":5,"r":1,"controller":"red"},
+      {"q":6,"r":1,"controller":"red"},
+      {"q":7,"r":1,"controller":"red"},
+      {"q":1,"r":2,"terrain":"urban","city_id":"west_depot","supply_source":true},
+      {"q":3,"r":2,"controller":null},
+      {"q":4,"r":2,"controller":"red","terrain":"urban","city_id":"bridgehead"},
+      {"q":5,"r":2,"controller":"red"},
+      {"q":6,"r":2,"controller":"red","terrain":"urban","city_id":"east_depot","supply_source":true},
+      {"q":7,"r":2,"controller":"red"},
+      {"q":4,"r":3,"controller":"red"},
+      {"q":5,"r":3,"controller":"red","terrain":"forest"},
+      {"q":6,"r":3,"controller":"red"},
+      {"q":7,"r":3,"controller":"red"},
+      {"q":4,"r":4,"controller":"red","terrain":"hills"},
+      {"q":5,"r":4,"controller":"red"},
+      {"q":6,"r":4,"controller":"red"},
+      {"q":7,"r":4,"controller":"red"}
+    ],
+    "edges": [
+      {"a":[3,0],"b":[4,0],"river":true},
+      {"a":[3,1],"b":[4,1],"river":true},
+      {"a":[3,1],"b":[4,0],"river":true},
+      {"a":[3,2],"b":[4,2],"river":true,"bridge":true,"road":true},
+      {"a":[3,2],"b":[4,1],"river":true},
+      {"a":[3,3],"b":[4,3],"river":true},
+      {"a":[3,3],"b":[4,2],"river":true},
+      {"a":[3,4],"b":[4,4],"river":true},
+      {"a":[3,4],"b":[4,3],"river":true},
+      {"a":[1,2],"b":[2,2],"road":true},
+      {"a":[2,2],"b":[3,2],"road":true},
+      {"a":[4,2],"b":[5,2],"road":true},
+      {"a":[5,2],"b":[6,2],"road":true}
+    ]
+  },
+  "factions": [{"id":"blue","name":"Синие"},{"id":"red","name":"Красные"}],
+  "units": [
+    {
+      "id": "west_inf",
+      "faction_id": "blue",
+      "unit_type": "infantry",
+      "q": 1,
+      "r": 2,
+      "strength": 10,
+      "readiness": 100,
+      "entrenchment": 0
+    },
+    {
+      "id": "west_cav",
+      "faction_id": "blue",
+      "unit_type": "cavalry",
+      "q": 2,
+      "r": 1,
+      "strength": 10,
+      "readiness": 100,
+      "entrenchment": 0
+    },
+    {
+      "id": "west_guns",
+      "faction_id": "blue",
+      "unit_type": "artillery",
+      "q": 1,
+      "r": 3,
+      "strength": 10,
+      "readiness": 100,
+      "entrenchment": 0
+    },
+    {
+      "id": "east_inf",
+      "faction_id": "red",
+      "unit_type": "infantry",
+      "q": 5,
+      "r": 2,
+      "strength": 10,
+      "readiness": 100,
+      "entrenchment": 0
+    },
+    {
+      "id": "east_hq",
+      "faction_id": "red",
+      "unit_type": "headquarters",
+      "q": 6,
+      "r": 2,
+      "strength": 10,
+      "readiness": 100,
+      "entrenchment": 0
+    },
+    {
+      "id": "east_reserve",
+      "faction_id": "red",
+      "unit_type": "infantry",
+      "q": 6,
+      "r": 3,
+      "strength": 10,
+      "readiness": 100,
+      "entrenchment": 0
+    }
+  ],
+  "objectives": [{"id":"bridgehead","q":4,"r":2,"type":"control","points_per_round":2}],
+  "victory": {"max_rounds":8,"target_score":12},
+  "starting_faction_id": "blue",
+  "random_seed": "42"
+}

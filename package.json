@@ -6,14 +6,21 @@
     "node": "22.16.0",
     "pnpm": "10.11.1"
   },
+  "devDependencies": {
+    "ajv": "6.15.0"
+  },
   "scripts": {
+    "test:schema": "node --test scripts/test-scenario-schema.cjs",
     "wasm:build": "wasm-pack build crates/game-wasm --target web --out-dir pkg",
     "dev": "pnpm wasm:build && pnpm --filter @interwar/web --fail-if-no-match dev",
     "build": "pnpm typecheck && pnpm --filter @interwar/web --fail-if-no-match build",
     "typecheck": "pnpm wasm:build && pnpm --filter @interwar/web --fail-if-no-match typecheck",
     "lint": "pnpm --filter @interwar/web --fail-if-no-match lint",
-    "test": "cargo test --workspace && pnpm --filter @interwar/web --fail-if-no-match test",
-    "test:e2e": "pnpm build && pnpm --filter @interwar/web --fail-if-no-match smoke",
+    "test": "cargo test --workspace && pnpm test:schema && pnpm --filter @interwar/web --fail-if-no-match test",
+    "test:wasm": "pnpm wasm:build && node --test scripts/test-wasm-replay.mjs",
+    "test:vk": "pnpm build && pnpm --filter @interwar/web --fail-if-no-match exec playwright test --config=playwright.vk.config.ts",
+    "test:telegram": "pnpm build && pnpm --filter @interwar/web --fail-if-no-match exec playwright test --config=playwright.telegram.config.ts",
+    "test:e2e": "pnpm build && node --test scripts/test-wasm-replay.mjs && pnpm --filter @interwar/web --fail-if-no-match smoke",
     "check": "cargo fmt --all --check && cargo clippy --workspace --all-targets -- -D warnings && pnpm test && pnpm lint && pnpm test:e2e"
   }
 }

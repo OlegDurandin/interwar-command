@@ -8,7 +8,7 @@ test('production map loads Rust, selects cells and follows camera changes', asyn
   page.on('requestfailed', req => errors.push(req.url()));
   page.on('response', res => { if (res.status() >= 400) errors.push(`${res.status()} ${res.url()}`); });
   const wasmResponse = page.waitForResponse(res => new URL(res.url()).pathname.endsWith('.wasm'));
-  await page.goto('/');
+  await page.goto('/?demo');
   const wasm = await wasmResponse;
   expect(wasm.ok()).toBe(true);
   expect([...((await wasm.body()).subarray(0, 4))]).toEqual([0, 97, 115, 109]);
@@ -66,7 +66,7 @@ test('production map loads Rust, selects cells and follows camera changes', asyn
 
 test('unavailable WASM produces a visible error', async ({ page }) => {
   await page.route('**/*.wasm', route => route.abort());
-  await page.goto('/');
+  await page.goto('/?demo');
   await expect(page.getByRole('alert')).toContainText('Не удалось загрузить ядро WebAssembly');
   await expect(page.locator('canvas')).toHaveCount(0);
   await expect(page.getByTestId('distance')).toHaveText('—');

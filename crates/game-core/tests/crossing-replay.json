@@ -1,0 +1,12 @@
+{
+  "commands": [
+    {"type":"move","unit_id":"west_cav","destination":{"q":4,"r":2}},
+    {"type":"attack","attacker_id":"west_cav","defender_id":"east_inf"},
+    {"type":"end_phase"},
+    {"type":"entrench","unit_id":"east_inf"},
+    {"type":"end_phase"}
+  ],
+  "scenario_content_hash":"c442b74d33b8d0b3f6471dae525ace8e02aa1ae9beddf5987eddbeec15e79be6",
+  "state_hash":"debc2d95992b6e4eaf139606ff24029bae7c4aa8659472ba85519a7cedde128e",
+  "history_hash":"bf32922f6b0bc61b600df7ec515e0cdfca65a9a90fca6725fbc130d7775d5759"
+}

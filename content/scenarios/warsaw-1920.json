@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "rules_version": "0.1",
+  "id": "warsaw_radzymin_1920",
+  "title": "Варшавское предмостье",
+  "description": "13 августа советские войска начали бои за Радзымин. Игра начинается вечером, когда город уже заняла Красная армия. На восточных подступах к Варшаве смена контроля над Радзымином и бои у Оссува определяют сюжет этой четырёхдневной операции. Удерживайте Радзымин (2 очка за раунд) и Оссув (1 очко). Побеждает сторона, набравшая 8 очков, или лидер после четвёртого раунда. При равенстве — ничья.",
+  "historicity": "inspired",
+  "period": "13–16 августа 1920 года",
+  "turn_days": 1,
+  "languages": [
+    "ru"
+  ],
+  "sources": [
+    "https://warszawa.ap.gov.pl/wp-content/uploads/2021/07/Warszawa-1920-Album-lekki.pdf",
+    "https://muzhp.pl/wiedza-on-line/czy-potrzeba-bylo-cudu-bitwa-warszawska-1920-r"
+  ],
+  "historical_context": {
+    "map_date": "1920-08-13",
+    "hex_scale": "Около 4 км между центрами соседних гексов.",
+    "formation_scale": "Фишка — условная полковая группа, артиллерия сведена в отдельную фишку поддержки.",
+    "assumptions": "Карта охватывает восточное предмостье. Контрудар с Вепша 16 августа остаётся за её границами. Дороги, размещение складов, численность и готовность заданы для игры. Очки и потери условны. Для реконструкции требуется сверка полковых позиций на вечер 13 августа и инфраструктуры по картам 1920 года.",
+    "review_version": "0.1 — хронология и топонимы; расстановка по мотивам"
+  },
+  "map": {
+    "width": 10,
+    "height": 6,
+    "default_terrain": "plain",
+    "default_controller": "blue",
+    "tiles": [
+      {"q":1,"r":0,"terrain":"forest"},
+      {"q":7,"r":0,"terrain":"urban","city_id":"Радзымин","controller":"red"},
+      {"q":8,"r":0,"controller":"red"},
+      {"q":9,"r":0,"controller":"red"},
+      {"q":2,"r":1,"terrain":"forest"},
+      {"q":4,"r":1,"terrain":"forest"},
+      {"q":5,"r":1,"terrain":"urban","city_id":"Слупно"},
+      {"q":7,"r":1,"controller":"red"},
+      {"q":8,"r":1,"controller":"red"},
+      {"q":9,"r":1,"controller":"red","terrain":"forest"},
+      {"q":5,"r":2,"terrain":"forest"},
+      {"q":7,"r":2,"controller":"red"},
+      {"q":8,"r":2,"controller":"red"},
+      {"q":9,"r":2,"controller":"red","supply_source":true},
+      {"q":0,"r":3,"terrain":"forest"},
+      {"q":2,"r":3,"terrain":"forest"},
+      {"q":4,"r":3,"terrain":"urban","city_id":"Зелёнка"},
+      {"q":5,"r":3,"terrain":"urban","city_id":"Оссув"},
+      {"q":6,"r":3,"controller":"red"},
+      {"q":7,"r":3,"controller":"red"},
+      {"q":8,"r":3,"controller":"red"},
+      {"q":9,"r":3,"controller":"red"},
+      {"q":4,"r":4,"terrain":"forest"},
+      {"q":6,"r":4,"controller":"red"},
+      {"q":7,"r":4,"controller":"red","terrain":"forest"},
+      {"q":8,"r":4,"controller":"red"},
+      {"q":9,"r":4,"controller":"red"},
+      {"q":1,"r":5,"terrain":"urban","city_id":"Варшава · Прага","supply_source":true},
+      {"q":6,"r":5,"controller":"red"},
+      {"q":7,"r":5,"controller":"red"},
+      {"q":8,"r":5,"controller":"red","terrain":"forest"},
+      {"q":9,"r":5,"controller":"red"}
+    ],
+    "edges": [
+      {"a":[1,5],"b":[2,4],"road":true},
+      {"a":[2,4],"b":[3,3],"road":true},
+      {"a":[3,3],"b":[4,2],"road":true},
+      {"a":[4,2],"b":[5,1],"road":true},
+      {"a":[5,1],"b":[6,1],"road":true},
+      {"a":[6,1],"b":[7,0],"road":true},
+      {"a":[7,0],"b":[8,0],"road":true},
+      {"a":[8,0],"b":[9,0],"road":true},
+      {"a":[3,3],"b":[4,3],"road":true},
+      {"a":[4,3],"b":[5,3],"road":true},
+      {"a":[5,3],"b":[6,3],"road":true},
+      {"a":[6,3],"b":[7,2],"road":true},
+      {"a":[7,2],"b":[8,2],"road":true},
+      {"a":[8,2],"b":[9,2],"road":true}
+    ]
+  },
+  "factions": [
+    {
+      "id": "blue",
+      "name": "Войско Польское"
+    },
+    {
+      "id": "red",
+      "name": "Красная армия"
+    }
+  ],
+  "units": [
+    {"id":"pl_line","faction_id":"blue","unit_type":"infantry","q":6,"r":1,"strength":7,"readiness":82,"entrenchment":1},
+    {"id":"pl_ossow","faction_id":"blue","unit_type":"infantry","q":5,"r":3,"strength":7,"readiness":85,"entrenchment":1},
+    {"id":"pl_reserve","faction_id":"blue","unit_type":"infantry","q":3,"r":3,"strength":9,"readiness":92,"entrenchment":0},
+    {"id":"pl_support","faction_id":"blue","unit_type":"artillery","q":4,"r":2,"strength":6,"readiness":85,"entrenchment":0},
+    {"id":"rk_north","faction_id":"red","unit_type":"infantry","q":7,"r":0,"strength":9,"readiness":92,"entrenchment":0},
+    {"id":"rk_centre","faction_id":"red","unit_type":"infantry","q":7,"r":1,"strength":8,"readiness":90,"entrenchment":0},
+    {"id":"rk_south","faction_id":"red","unit_type":"infantry","q":6,"r":3,"strength":9,"readiness":90,"entrenchment":0},
+    {"id":"rk_support","faction_id":"red","unit_type":"artillery","q":8,"r":2,"strength":7,"readiness":88,"entrenchment":0}
+  ],
+  "objectives": [
+    {"id":"radzymin","q":7,"r":0,"type":"control","points_per_round":2},
+    {"id":"ossow","q":5,"r":3,"type":"control","points_per_round":1}
+  ],
+  "victory": {
+    "max_rounds": 4,
+    "target_score": 8
+  },
+  "starting_faction_id": "red",
+  "random_seed": "19200813"
+}

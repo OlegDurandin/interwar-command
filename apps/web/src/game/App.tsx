@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import init, { hex_distance } from '../../../../crates/game-wasm/pkg/game_wasm.js';
 import { mountMap } from '../renderer/map';
+import { useBackButton } from '../platform/useBackButton';
 import type { Hex } from '../renderer/geometry';
 
 let initialization: ReturnType<typeof init> | undefined;
-function initializeCore() {
+export function initializeCore() {
   return initialization ??= init().catch((error: unknown) => {
     initialization = undefined;
     throw error;
@@ -12,6 +13,7 @@ function initializeCore() {
 }
 
 export function App() {
+  useBackButton(() => location.assign(location.pathname + location.hash));
   const host = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState('Загрузка ядра…');
   const [error, setError] = useState('');
@@ -43,7 +45,7 @@ export function App() {
   }, []);
 
   return <main>
-    <header><span className="emblem" aria-hidden="true">✥</span><h1>Interwar Command</h1></header>
+    <header><span className="emblem" aria-hidden="true">✥</span><h1>Interwar Command</h1><a className="map-link" href="./">Переправа →</a></header>
     <div className="layout">
       <section className="map-panel" aria-labelledby="map-title">
         <div className="map-title"><h2 id="map-title">Тестовая карта</h2><span>10 × 8</span></div>

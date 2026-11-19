@@ -1,0 +1,154 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Interwar Command — сценарий v1",
+  "description": "Межобъектные ограничения и нормализацию проверяет game_core::scenario::load_scenario по SPEC §12.2.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "rules_version",
+    "id",
+    "title",
+    "historicity",
+    "turn_days",
+    "map",
+    "factions",
+    "units",
+    "objectives",
+    "victory",
+    "starting_faction_id",
+    "random_seed"
+  ],
+  "properties": {
+    "schema_version": {"const":1},
+    "rules_version": {"const":"0.1"},
+    "id": {"$ref":"#/definitions/id"},
+    "title": {"type":"string"},
+    "historicity": {"enum":["fictional","inspired","historical"]},
+    "turn_days": {"type":"integer","minimum":1,"maximum":4294967295},
+    "map": {"$ref":"#/definitions/map"},
+    "factions": {"type":"array","items":{"$ref":"#/definitions/faction"},"minItems":2,"maxItems":2},
+    "units": {"type":"array","items":{"$ref":"#/definitions/unit"},"maxItems":2048},
+    "objectives": {"type":"array","items":{"$ref":"#/definitions/objective"},"minItems":1,"maxItems":256},
+    "victory": {"$ref":"#/definitions/victory"},
+    "starting_faction_id": {"$ref":"#/definitions/id"},
+    "random_seed": {
+      "type": "string",
+      "maxLength": 20,
+      "pattern": "^(?:0|[1-9][0-9]{0,18}|1[0-7][0-9]{18}|18[0-3][0-9]{17}|184[0-3][0-9]{16}|1844[0-5][0-9]{15}|18446[0-6][0-9]{14}|184467[0-3][0-9]{13}|1844674[0-3][0-9]{12}|184467440[0-6][0-9]{10}|1844674407[0-2][0-9]{9}|18446744073[0-6][0-9]{8}|1844674407370[0-8][0-9]{6}|18446744073709[0-4][0-9]{5}|184467440737095[0-4][0-9]{4}|18446744073709550[0-9]{3}|18446744073709551[0-5][0-9]{2}|1844674407370955160[0-9]{1}|1844674407370955161[0-4]|18446744073709551615)(?![\\s\\S])"
+    },
+    "description": {"type":["string","null"]},
+    "period": {"type":["string","null"]},
+    "languages": {"type":"array","items":{"type":"string"}},
+    "sources": {"type":"array","items":{"type":"string","pattern":"\\S"}},
+    "historical_context": {"anyOf":[{"$ref":"#/definitions/historical_context"},{"type":"null"}]}
+  },
+  "if": {"properties":{"historicity":{"const":"historical"}}},
+  "then": {
+    "required": ["sources","historical_context"],
+    "properties": {"sources":{"minItems":1},"historical_context":{"$ref":"#/definitions/historical_context"}}
+  },
+  "definitions": {
+    "id": {"type":"string","minLength":1,"maxLength":64},
+    "terrain": {"enum":["plain","forest","hills","swamp","urban","water"]},
+    "endpoint": {"type":"array","items":{"type":"integer","minimum":0,"maximum":255},"minItems":2,"maxItems":2},
+    "tile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["q","r"],
+      "properties": {
+        "q": {"type":"integer","minimum":0,"maximum":255},
+        "r": {"type":"integer","minimum":0,"maximum":255},
+        "terrain": {"$ref":"#/definitions/terrain"},
+        "controller": {"anyOf":[{"$ref":"#/definitions/id"},{"type":"null"}]},
+        "city_id": {"anyOf":[{"$ref":"#/definitions/id"},{"type":"null"}]},
+        "supply_source": {"type":"boolean","default":false}
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["a","b"],
+      "properties": {
+        "a": {"$ref":"#/definitions/endpoint"},
+        "b": {"$ref":"#/definitions/endpoint"},
+        "river": {"type":"boolean","default":false},
+        "bridge": {"type":"boolean","default":false},
+        "road": {"type":"boolean","default":false},
+        "rail": {"type":"boolean","default":false}
+      },
+      "if": {"required":["bridge"],"properties":{"bridge":{"const":true}}},
+      "then": {"required":["river"],"properties":{"river":{"const":true}}}
+    },
+    "map": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width","height","default_terrain","default_controller"],
+      "properties": {
+        "width": {"type":"integer","minimum":1,"maximum":256},
+        "height": {"type":"integer","minimum":1,"maximum":256},
+        "default_terrain": {"$ref":"#/definitions/terrain"},
+        "default_controller": {"anyOf":[{"$ref":"#/definitions/id"},{"type":"null"}]},
+        "tiles": {"type":"array","items":{"$ref":"#/definitions/tile"},"default":[]},
+        "edges": {"type":"array","items":{"$ref":"#/definitions/edge"},"default":[]}
+      }
+    },
+    "faction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id","name"],
+      "properties": {"id":{"$ref":"#/definitions/id"},"name":{"type":"string"}}
+    },
+    "unit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id","faction_id","unit_type","q","r","strength","readiness","entrenchment"],
+      "properties": {
+        "id": {"$ref":"#/definitions/id"},
+        "faction_id": {"$ref":"#/definitions/id"},
+        "unit_type": {"enum":["infantry","cavalry","artillery","headquarters"]},
+        "q": {"type":"integer","minimum":0,"maximum":255},
+        "r": {"type":"integer","minimum":0,"maximum":255},
+        "strength": {"type":"integer","minimum":1,"maximum":10},
+        "readiness": {"type":"integer","minimum":0,"maximum":100},
+        "entrenchment": {"type":"integer","minimum":0,"maximum":2},
+        "name": {"type":["string","null"]},
+        "experience": {"anyOf":[{"type":"integer","minimum":0,"maximum":4294967295},{"type":"null"}]},
+        "historical_id": {"type":["string","null"]}
+      }
+    },
+    "objective": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id","q","r","type","points_per_round"],
+      "properties": {
+        "id": {"$ref":"#/definitions/id"},
+        "q": {"type":"integer","minimum":0,"maximum":255},
+        "r": {"type":"integer","minimum":0,"maximum":255},
+        "type": {"const":"control"},
+        "points_per_round": {"type":"integer","minimum":1,"maximum":1000}
+      }
+    },
+    "victory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_rounds"],
+      "properties": {
+        "max_rounds": {"type":"integer","minimum":1,"maximum":10000},
+        "target_score": {"type":"integer","minimum":1,"maximum":4294967295}
+      }
+    },
+    "historical_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["map_date","hex_scale","formation_scale","assumptions","review_version"],
+      "properties": {
+        "map_date": {"type":"string","format":"date","pattern":"^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "hex_scale": {"type":"string","pattern":"\\S"},
+        "formation_scale": {"type":"string","pattern":"\\S"},
+        "assumptions": {"type":"string","pattern":"\\S"},
+        "review_version": {"type":"string","pattern":"\\S"}
+      }
+    }
+  }
+}

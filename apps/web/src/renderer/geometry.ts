@@ -30,9 +30,9 @@ export function screenToWorld(p: Point, camera: Camera): Point {
   return { x: (p.x - camera.x) / camera.scale, y: (p.y - camera.y) / camera.scale };
 }
 
-export function pick(point: Point, camera: Camera): Hex | undefined {
+export function pick(point: Point, camera: Camera, width = columns, height = rows): Hex | undefined {
   const cell = pixelToHex(screenToWorld(point, camera));
-  if (cell.q >= 0 && cell.q < columns && cell.r >= 0 && cell.r < rows) return cell;
+  if (cell.q >= 0 && cell.q < width && cell.r >= 0 && cell.r < height) return cell;
 }
 
 export function zoomAt(camera: Camera, point: Point, factor: number): Camera {
@@ -41,8 +41,8 @@ export function zoomAt(camera: Camera, point: Point, factor: number): Camera {
   return { x: point.x - anchor.x * scale, y: point.y - anchor.y * scale, scale };
 }
 
-export function fitCamera(width: number, height: number): Camera {
-  const last = hexToPixel({ q: columns - 1, r: rows - 1 });
+export function fitCamera(width: number, height: number, mapWidth = columns, mapHeight = rows): Camera {
+  const last = hexToPixel({ q: mapWidth - 1, r: mapHeight - 1 });
   const scale = Math.min(width * 0.86 / (last.x + radius * root3),
     height * 0.82 / (last.y + radius * 2), 1.6);
   return { x: (width - last.x * scale) / 2, y: (height - last.y * scale) / 2, scale };

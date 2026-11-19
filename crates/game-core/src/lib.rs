@@ -1,6 +1,16 @@
-//! Discrete pointy-top axial geometry (SPEC §5.1).
+//! Discrete axial geometry and validated map data.
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub mod game;
+mod map;
+pub mod scenario;
+pub use map::{
+    EdgeFeatures, FactionId, HexEdge, Map, MapError, MapErrorKind, Terrain, Tile, TileOverride,
+};
+
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, serde::Serialize, serde::Deserialize,
+)]
+#[serde(deny_unknown_fields)]
 pub struct Hex {
     pub q: i32,
     pub r: i32,

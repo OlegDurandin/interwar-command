@@ -4,3 +4,5 @@ node_modules/
 /apps/web/dist/
 /apps/web/test-results/
 .DS_Store
+Thumbs.db
+Thumbs.db:*

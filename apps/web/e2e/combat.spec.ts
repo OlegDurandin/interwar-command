@@ -1,0 +1,31 @@
+import { expect, test } from '@playwright/test';
+import { clickCell, startCrossing } from './start';
+
+test('Переправа: supply overlay, cavalry move, combat preview and confirmed attack', async ({page}, info) => {
+  const errors: string[]=[];
+  page.on('pageerror', error => errors.push(error.message));
+  page.on('response', res => { if (res.status()>=400) errors.push(res.url()); });
+  await startCrossing(page);
+  const cavalry=page.getByRole('button',{name:/Кавалерия/});
+  await cavalry.click();
+  await page.getByRole('checkbox',{name:/Прогноз снабжения/}).check();
+  await expect(page.locator('.supply-key')).toContainText('Ограниченное');
+  await page.getByRole('checkbox',{name:/Прогноз снабжения/}).uncheck();
+  await clickCell(page,4,2);
+  await expect(page.getByRole('status')).toContainText('заняла клетку (4, 2)');
+  await clickCell(page,5,2);
+  const preview=page.getByRole('region',{name:'Предпросмотр боя'});
+  await expect(preview).toContainText('Пехота (5, 2)');
+  await expect(preview.getByRole('row',{name:/Атакующий/})).toContainText('1–2');
+  await expect(preview.getByRole('row',{name:/Защитник/})).toContainText('0–0');
+  await expect(preview).toContainText('защитник +1');
+  await page.screenshot({path:info.outputPath('command-room-desktop.png'),fullPage:true});
+  await preview.getByRole('button',{name:'Атаковать'}).click();
+  await expect(page.getByRole('status')).toContainText('Потери атакующего: 1, защитника: 0');
+  await expect(preview).toHaveCount(0);
+  await expect(page.locator('.order dd').first()).toHaveText('9');
+  await expect(page.locator('.order dd').last()).toHaveText('85');
+  await page.getByRole('button',{name:'Завершить фазу'}).click();
+  await expect(page.locator('.turn')).toContainText('Красные');
+  expect(errors).toEqual([]);
+});

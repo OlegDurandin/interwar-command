@@ -6,10 +6,17 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    devDependencies:
+      ajv:
+        specifier: 6.15.0
+        version: 6.15.0
 
   apps/web:
     dependencies:
+      '@vkontakte/vk-bridge':
+        specifier: 3.0.2
+        version: 3.0.2
       pixi.js:
         specifier: 8.9.2
         version: 8.9.2
@@ -424,6 +431,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@swc/helpers@0.5.24':
+    resolution: {integrity: sha512-6tcXo4kA8HgGO7AVmawB57RYi/piBPYVHVcO6dXjX+SZw8GoHmi262sp4v2Ha2kNP9Cx84qei27yT+fjS1lxgg==}
+
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
 
@@ -543,6 +553,9 @@ packages:
 
   '@vitest/utils@3.2.4':
     resolution: {integrity: sha512-fB2V0JFrQSMsCo9HiSq3Ezpdv4iYaXRG1Sx8edX3MwxfyNn83mKiGzOcH+Fkxt4MHxr3y42fQi1oeAInqgX2QA==}
+
+  '@vkontakte/vk-bridge@3.0.2':
+    resolution: {integrity: sha512-MTp+nl0/jH4Sa2TXDyxNfy9VkhOhRQR1oQ4yhvthVDA4aWUa26npns7bRgfTuR3xDVGFiqW7zAwLnwcv3mL+dA==}
 
   '@webgpu/types@0.1.74':
     resolution: {integrity: sha512-lgiI4hbuLcI9unnm2cL/tvCaQU45dp0xcLWJh5uB/9MBGvIA4F8XIk7nSiBeg+K4xWGYwgZKn80LmERI5CxoTA==}
@@ -1409,6 +1422,8 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.68.6':
     optional: true
 
+  '@swc/helpers@0.5.24': {}
+
   '@types/chai@5.2.3':
     dependencies:
       '@types/deep-eql': 4.0.2
@@ -1573,6 +1588,10 @@ snapshots:
       '@vitest/pretty-format': 3.2.4
       loupe: 3.2.1
       tinyrainbow: 2.0.0
+
+  '@vkontakte/vk-bridge@3.0.2':
+    dependencies:
+      '@swc/helpers': 0.5.24
 
   '@webgpu/types@0.1.74': {}
 
